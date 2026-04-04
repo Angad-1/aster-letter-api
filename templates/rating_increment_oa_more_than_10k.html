@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ css_path }}">
+</head>
+
+<body>
+
+  <!-- ================= HEADER (Only First Page) ================= -->
+  <header>
+    <img src="{{ header_path }}" alt="company header">
+  </header>
+
+  <p><i>Private & Confidential</i></p>
+
+  <p><b>{{date}}</b></p>
+
+  <p>
+    <b>
+      To,<br>
+      {{name}}<br>
+      {{designation}}<br>
+      {{band}}<br>
+      {{business_unit}}
+    </b>
+  </p>
+
+  <p>Dear <b>{{name}}</b>,<br /></p>
+
+  <p>
+    We at Aster DM Healthcare would like to thank you for your valuable contribution during {{performance_year}}.
+    We would also like to recognize your commitment towards achieving your individual, teams as well as organization's
+    objectives.
+  </p>
+
+  <p>
+    As such, further to your recent annual review discussion for {{performance_year}} with your manager(s) on your
+    performance KPI's
+    and/or Aster behavioral competencies, your overall performance has been assessed as
+    <b>“{{rating_label}}”</b>.
+  </p>
+
+  <p>Congratulations!</p>
+
+  <p>
+    In view of your continued efforts and performance your compensation has now been revised to
+    <b>{{currency}} {{aed_per_month}}</b> per month.
+    We would also like to reward you with an Organizational Allowance of
+    <b>{{currency}} {{org_allowance}}</b> per annum in addition to your current salary and allowances which
+    will be paid out in two equal installments.
+  </p>
+
+  <p>
+    The detailed break up of your revised compensation is mentioned in Annexure A.
+  </p>
+
+  <p>
+    All other terms and conditions of your appointment remains unchanged.
+    Your next review shall be due on <b>{{next_review_date}}</b>.
+  </p>
+
+  <p>
+    We on behalf of the Leadership team at Aster DM Healthcare, take this opportunity to express our gratitude and
+    appreciation
+    and look forward to your continued commitment as you grow with our organization. We are confident that with your
+    support
+    we will continue to achieve our shared vision of serving the world with accessible and affordable quality healthcare
+    while
+    embodying our core culture of Aster CARES.
+  </p>
+
+  <p>
+    We wish you a great career ahead with Aster DM Healthcare.
+  </p>
+
+  <br>
+
+  <p>For and on behalf of <b>Aster DM Healthcare</b>,</p>
+  <div class="signature">
+    {% if signature_path %}
+    <img src="{{signature_path}}">
+    {% endif %}
+
+    <p>
+      <b>
+        {{signatory_name}}<br>
+        {{signatory_designation}}<br>
+        {{vertical}}<br>
+      </b>
+    </p>
+
+  </div>
+
+  <!-- ================= PAGE BREAK ================= -->
+  <div style="page-break-before: always;"></div>
+
+  <!-- ================= ANNEXURE ================= -->
+
+  <h3>Annexure A</h3>
+
+  <table class="annexure">
+    <tr style="text-align: center;">
+      <th colspan="3">Name: {{name}}</th>
+    </tr>
+    <tr>
+      <th colspan="3">Designation: {{designation}}</th>
+    </tr>
+    <tr>
+      <td class="annexure-head">
+        Particulars
+      </td>
+      <td class="annexure-head">
+        Current Monthly Salary ({{currency}})<br />{{performance_year}}
+      </td>
+      <td class="annexure-head">
+        Effective {{new_salary_effective_date}} Monthly Salary ({{currency}})<br />{{new_salary_effective_year}}
+      </td>
+    </tr>
+
+    {{annexure_rows}}
+  </table>
+
+  <p style="font-size: 12px;">
+    * Travel and Mobile allowance (B) are based on role specific allowance and determined as per eligibility.
+  </p>
+
+  <p style="font-size: 12px;">
+    ** Total compensation is subject to change based on review, legal guidelines and organization performance.
+  </p>
+
+  <p style="font-size: 12px;margin-bottom: 20px;">
+    <i>
+      Salary and performance rating details are strictly confidential and should not be disclosed.
+    </i>
+  </p>
+
+  <br>
+
+  <p>For and on behalf of <b>Aster DM Healthcare</b>,</p>
+  <div class="signature">
+
+    {% if signature_path %}
+    <img src="{{signature_path}}">
+    {% endif %}
+
+    <p>
+      <b>
+        {{signatory_name}}<br>
+        {{signatory_designation}}<br>
+        {{vertical}}<br>
+      </b>
+    </p>
+  </div>
+
+  <!-- ================= FOOTER (All Pages) ================= -->
+  <footer>
+    <img src="{{ footer_path }}" alt="footer">
+  </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <style>
+    /* ================= PAGE SETUP ================= */
+    @page {
+      size: A4;
+      margin: 30mm 0 32mm 0;
+      /* 
+      @top-center {
+        content: element(pageHeader);
+      }
+
+      @bottom-center {
+        content: element(pageFooter);
+      } */
+    }
+
+    /* ================= BASE ================= */
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11pt;
+      line-height: 1.75;
+      margin: 0;
+      color: #000;
+    }
+
+    /* ================= HEADER ================= */
+    header {
+      /* position: fixed;
+      border-bottom: 1px solid #bbb;
+      padding-bottom: 6px; */
+      position: fixed;
+      top: -30mm;
+      left: 0;
+      right: 0;
+      height: 30mm;
+      border-bottom: 1px solid #bbb;
+    }
+
+    header img {
+      /* width: 100%;
+      max-height: 80px;
+      object-fit: contain; */
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ================= FOOTER ================= */
+    footer {
+      /* position: fixed;
+      border-top: 1px solid #bbb;
+      padding-top: 5px; */
+      position: fixed;
+      bottom: -32mm;
+      left: 0;
+      right: 0;
+      height: 32mm;
+    }
+
+    footer img {
+      /* width: 100%;
+      max-height: 50px;
+      object-fit: contain; */
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+
+    /* ================= CONTENT ================= */
+    p {
+      margin: 14px 0;
+    }
+
+    .content-page {
+      min-height: 190mm;
+      padding: 0 22mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .signature {
+      margin-top: 30px;
+    }
+
+    .signature img {
+      display: block;
+      margin-bottom: 5px;
+      max-width: 180px;
+      height: 30px;
+    }
+
+    /* ================= PAGE BREAK ================= */
+    .page-break {
+      page-break-before: always;
+    }
+
+    /* ================= TABLE ================= */
+    table.salary {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 28px;
+      font-size: 10pt;
+    }
+
+    table.salary th,
+    table.salary td {
+      border: 1px solid #000;
+      padding: 9px;
+      text-align: center;
+    }
+
+    table.salary th {
+      background: #f1f1f1;
+      font-weight: bold;
+    }
+
+    /* ================= NOTES ================= */
+    .small-note {
+      font-size: 9pt;
+      margin-top: 18px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header>
+    <img src="{{ header_path }}" alt="company header">
+  </header>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <img src="{{ footer_path }}" alt="company footer">
+  </footer>
+
+  <!-- ================= PAGE 1 ================= -->
+  <div class="content-page">
+
+    <div>
+      <p>{{ Date }}</p>
+
+      <p>
+        To,<br>
+        <strong>{{ Name }}</strong><br>
+        {{ Designation }}<br>
+        {{ Band }}<br>
+        {{ BusinessUnit }}
+      </p>
+
+      <p>Dear {{ Name }},</p>
+
+      <p>
+        We appreciate your valuable contributions during {{ PerformanceYear }} and your
+        consistent commitment towards achieving individual, team, and organizational goals.
+      </p>
+
+      <p>
+        Following the annual performance review discussion, your overall performance has been
+        assessed as <strong>{{ Rating }}</strong>. We congratulate you on this achievement.
+      </p>
+
+      <p>
+        In recognition of your performance, your revised monthly compensation will be
+        <strong>{{ Currency }} {{ RevisedSalary }}</strong>.
+        Additionally, you will receive an Organizational Allowance of
+        <strong>{{ Currency }} {{ OrgAllowance }}</strong> per annum.
+      </p>
+
+      <p>
+        The detailed structure of your revised compensation is outlined in Annexure A.
+        All other terms and conditions of your appointment remain unchanged.
+        Your next performance review is scheduled for {{ NextReviewDate }}.
+      </p>
+
+      <p>
+        On behalf of the Leadership Team, we thank you for your continued dedication and
+        look forward to achieving our shared objectives together.
+      </p>
+
+      <p>
+        For and on behalf of <strong>{{ Organization }}</strong>,
+      </p>
+    </div>
+
+    <div class="signature">
+      {% if signature_path %}
+      <img src="{{signature_path }}" alt="signature">
+      {% endif %}
+      <strong>{{ SignatoryName }}</strong><br>
+      {{ SignatoryDesignation }}<br>
+      {{ Vertical }}
+    </div>
+
+  </div>
+
+  <!-- ================= PAGE 2 ================= -->
+  <div class="page-break"></div>
+
+  <div class="content-page">
+
+    <div>
+      <h3 style="text-align:center;">ANNEXURE A</h3>
+
+      <table class="salary">
+        <tr>
+          <th>Particulars</th>
+          <th>Current Monthly Salary ({{ Currency }})</th>
+          <th>{{ PerformanceYear }}</th>
+          <th>Revised Monthly Salary ({{ Currency }})</th>
+          <th>{{ EffectiveYear }}</th>
+        </tr>
+        <tr>
+          <td>Base Salary</td>
+          <td>{{ CurrentBasic }}</td>
+          <td>{{ PerformanceYear }}</td>
+          <td>{{ NewFixed }}</td>
+          <td>{{ EffectiveYear }}</td>
+        </tr>
+      </table>
+
+      <p class="small-note">
+        * Compensation is subject to organizational policies, statutory requirements,
+        and applicable laws.<br>
+        * Salary and performance-related information is strictly confidential.
+      </p>
+    </div>
+
+    <div class="signature">
+      {% if signature_path %}
+      <img src="{{signature_path }}" alt="signature">
+      {% endif %}
+      <strong>{{ SignatoryName }}</strong><br>
+      {{ SignatoryDesignation }}<br>
+      {{ Vertical }}
+    </div>
+
+  </div>
+
+</body>
+
+</html>

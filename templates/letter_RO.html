@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <style>
+        /* ================= PAGE SETUP ================= */
+        @page {
+            size: A4;
+            margin: 30mm 0 32mm 0;
+            /* FULL WIDTH */
+        }
+
+        /* ================= BASE ================= */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11pt;
+            line-height: 1.75;
+            color: #000;
+            margin: 0;
+        }
+
+        /* ================= HEADER ================= */
+        header {
+            position: fixed;
+            top: -30mm;
+            left: 0;
+            right: 0;
+            height: 30mm;
+            border-bottom: 1px solid #bbb;
+        }
+
+        header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background-color: aqua;
+        }
+
+        /* ================= FOOTER ================= */
+        footer {
+            position: fixed;
+            bottom: -32mm;
+            left: 0;
+            right: 0;
+            height: 32mm;
+        }
+
+        footer img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ================= CONTENT ================= */
+        .content {
+            min-height: 190mm;
+            padding: 0 22mm;
+            /* RESTORE TEXT MARGINS */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        p {
+            margin: 12px 0;
+        }
+
+        .signature {
+            margin-top: 28px;
+        }
+
+        .signature img {
+            display: block;
+            margin-bottom: 5px;
+            max-width: 180px;
+            height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header>
+        <img src="{{ header_path }}" alt="company header">
+    </header>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+        <img src="{{ footer_path }}" alt="company footer">
+    </footer>
+
+    <!-- ================= CONTENT ================= -->
+    <div class="content">
+
+        <div>
+            <p><strong>Private &amp; Confidential</strong></p>
+
+            <p>{{ Date }}</p>
+
+            <p>
+                To,<br>
+                <strong>{{ Name }}</strong><br>
+                {{ Designation }}, {{ Department }}<br>
+                Band: {{ Band }}<br>
+                Business Unit: {{ BusinessUnit }}
+            </p>
+
+            <p>Dear {{ Name }},</p>
+
+            <p>
+                We would like to take this opportunity to acknowledge your contributions
+                and efforts during the performance year {{ PerformanceYear }}.
+                Your commitment and professionalism are appreciated.
+            </p>
+
+            <p>
+                Based on the annual performance review for {{ PerformanceYear }},
+                your performance has been assessed as
+                <strong>{{ Rating }}</strong>.
+            </p>
+
+            <p><strong>Congratulations!</strong></p>
+
+            <p>
+                Please note that this communication is limited to sharing your
+                performance rating outcome. There is no change to your compensation
+                structure at this time.
+            </p>
+
+            <p>
+                All other terms and conditions of your employment remain unchanged.
+            </p>
+
+            <p>
+                We appreciate your continued efforts and wish you success in
+                your role and future endeavors.
+            </p>
+
+            <p>For and on behalf of <strong>{{ Organization }}</strong>,</p>
+        </div>
+
+        <div class="signature">
+            {% if signature_path %}
+            <img src="{{signature_path }}" alt="signature">
+            {% endif %}
+            <strong>{{ SignatoryName }}</strong><br>
+            {{ SignatoryDesignation }}<br>
+            {{ Vertical }}
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -39,6 +39,7 @@ BASE_UPLOAD_DIR = Path("uploads")
 IMAGE_DIR = BASE_UPLOAD_DIR / "images"
 UPLOAD_DIR = "tmp_assets"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+os.makedirs(BASE_UPLOAD_DIR, exist_ok=True)
 
 def safe(v, d="", *, is_num=False, dec=0):
     if v is None or pd.isna(v):
@@ -238,6 +239,10 @@ def generate_pdf(emp,meta):
     template = env.get_template(template_name)
     ASSETS_DIR = Path(meta["assets_dir"])
     css_path = (ASSETS_DIR / "css/common.css").as_uri()
+    
+    def get_signer_key(name: str, designation: str) -> str:
+        # Process both inputs through the same cleaning logic and join them
+        return "_".join(" ".join(str(x or "").lower().split()) for x in (name, designation))
         
     
     annexure_items = [
@@ -249,7 +254,9 @@ def generate_pdf(emp,meta):
         {"label": "Travel & Mobile Allowance (B)", "current": safe(emp.get("Current Travel & Mobile Allowance (B)"), is_num=True), "new": safe(emp.get("New Travel & Mobile Allowance (B)"), is_num=True)},
         {"label": "Total Compensation",        "current": safe(emp.get("Current Total Gross Salary (TGS) (A) + (B)"), is_num=True), "new": safe(emp.get("New Total Gross Salary (TGS) (A) + (B)"), is_num=True)},
     ]
-
+    sgn_name = safe(emp.get("Signatory Name"))
+    sgn_desg = safe(emp.get("Signatory Designation"))
+    
     html = template.render(
 
         # ---------- META ----------
@@ -307,13 +314,13 @@ def generate_pdf(emp,meta):
         pip_effective_date=format_date(emp.get("PIP Effective Date")),
 
         # ---------- SIGNATORY ----------
-        signatory_name=safe(emp.get("Signatory Name")),
-        signatory_designation=safe(emp.get("Signatory Designation")),
+        signatory_name=sgn_name,
+        signatory_designation=sgn_desg,
 
         # ---------- TEMPLATE META ----------
         header_path=meta["header_path"],
         footer_path=meta["footer_path"],
-        signature_path=meta.get("signatures", {}).get(emp.get("Signatory Name")),
+        signature_path=meta.get("signatures", {}).get(get_signer_key(sgn_name, sgn_desg)),
         annexure_rows = build_annexure_rows(annexure_items),
         css_path=css_path,
     )

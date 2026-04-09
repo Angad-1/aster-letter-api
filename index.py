@@ -3,27 +3,26 @@ import logging
 logging.basicConfig(level=logging.WARNING, force=True)
 
 # Silence noisy libraries
-# for name in ["fontTools", "fontTools.subset", "fontTools.ttLib", "weasyprint"]:
-#     logger = logging.getLogger(name)
-#     logger.setLevel(logging.CRITICAL)
-#     logger.propagate = False
-#     logger.handlers.clear()
-#     logger.addHandler(logging.NullHandler())
+for name in ["fontTools", "fontTools.subset", "fontTools.ttLib", "weasyprint"]:
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.ERROR)
+    logger.propagate = False
+    logger.handlers.clear()
+    logger.addHandler(logging.NullHandler())
+    
 import os
 import asyncio
 from fastapi import FastAPI,Request
 from fastapi.responses import JSONResponse
-from sqlmodel import select
+from sqlmodel import select,SQLModel
 from sqlmodel.ext.asyncio.session import AsyncSession
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
-from sqlmodel import SQLModel
 from sqlalchemy import event
 from core.db import engine
 from utilities.utils import MyHTTPException,hash_password,file_stem
-from core.db import engine
 from models.models import Users
 from routes import api_router
 from services.letterServices import worker, PDF_WORKERS
@@ -95,7 +94,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Aster Letter Generation Backend",
     debug=False,
-    # docs_url="/docs" if ENV != "production" else None,
+    docs_url="/docs" if ENV != "production" else None,
     redoc_url=None,
     lifespan=lifespan
 )

@@ -75,7 +75,18 @@
 #     finally:
 #         JOB_SEMAPHORE.release()
 
+import logging
 
+logging.basicConfig(level=logging.WARNING, force=True)
+
+# Silence noisy libraries
+for name in ["fontTools", "fontTools.subset", "fontTools.ttLib", "weasyprint"]:
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.ERROR)
+    logger.propagate = False
+    logger.handlers.clear()
+    logger.addHandler(logging.NullHandler())
+    
 import io,gc
 import json
 import zipfile
@@ -200,6 +211,8 @@ def process_excel_sync(body):
         "signatures": signature_paths,
         "assets_dir": str(ASSETS_DIR), 
     }
+    # print ("Meta prepared, starting to read Excel and generate PDFs...",signature_paths, flush=True)
+    # print ("body sign...",body.signatures, flush=True)
 
     employees = read_excel(body.file)
 

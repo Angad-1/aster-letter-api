@@ -161,8 +161,8 @@ async def refresh_token(db:AsyncSession, body:RefreshReq)->RefreshRes:
         payload = jwt.decode(
             body.refresh_token, os.getenv("SECRET_KEY"), algorithms=[os.getenv("ALGORITHM")]
         )
-        user_id: str = payload.get("id")
-        session_id = payload.get("session_id")
+        user_id = UUID(payload.get("id"))
+        session_id = UUID(payload.get("session_id"))
         token_type: str = payload.get("type")
 
         if user_id is None or token_type != "refresh":
@@ -246,8 +246,6 @@ async def refresh_token(db:AsyncSession, body:RefreshReq)->RefreshRes:
         message= "Token refreshed successfully"
     )
     
-from uuid import UUID
-from sqlmodel import select
 
 async def logout_user(db: AsyncSession,payload: dict,id: UUID | None,req: Request) -> WithoutData:
     current_user_id = UUID(str(payload.get("id")))
